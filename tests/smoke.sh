@@ -111,7 +111,7 @@ case "$ct" in text/css*) ok "/style.css Content-Type: $ct" ;; *) bad "/style.css
 grep -q 'prefers-color-scheme: dark' "$WORK/b" && ok "dark colours in style.css" || bad "no dark colours"
 
 echo "== Files that must not be served"
-for p in /README.md /AGENTS.md /Dockerfile /.dockerignore /.gitignore /tests/smoke.sh \
+for p in /README.md /AGENTS.md /package.json /package-lock.json /Dockerfile /.dockerignore /.gitignore /tests/smoke.sh \
          /docs/verification/ /.github/workflows/check.yml /.git/config; do
   fetch "$p"
   [ "$status" = 404 ] && ok "$p is 404" || bad "$p is $status, want 404"

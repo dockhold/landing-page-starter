@@ -14,5 +14,7 @@ Dockerfile
 .dockerignore
 README.md
 AGENTS.md
+package.json
+package-lock.json
 tests
 docs

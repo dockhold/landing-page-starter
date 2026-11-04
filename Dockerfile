@@ -4,6 +4,10 @@ FROM node:22-alpine
 
 RUN npm install -g serve@14 && npm cache clean --force
 
+# serve looks for a newer version of itself each time it starts. A landing
+# page has no use for that, so it starts without reaching out anywhere.
+ENV NO_UPDATE_CHECK=1
+
 WORKDIR /site
 COPY . .
 
