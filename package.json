@@ -1,0 +1,12 @@
+{
+  "name": "landing-page-starter",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A one-page landing for a product or an idea, in plain HTML and CSS, that deploys to Dockhold with zero config.",
+  "scripts": {
+    "start": "serve -l $PORT ."
+  },
+  "devDependencies": {
+    "serve": "^14.2.3"
+  }
+}

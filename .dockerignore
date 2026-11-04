@@ -1,0 +1,18 @@
+# Keep the image small, and never bake local files into it.
+# Everything left in this folder is served as a public file, so the repo's
+# own notes, tests and tooling stay out.
+node_modules
+npm-debug.log*
+.git
+.github
+.gitignore
+.env
+.env.*
+*.log
+.DS_Store
+Dockerfile
+.dockerignore
+README.md
+AGENTS.md
+tests
+docs

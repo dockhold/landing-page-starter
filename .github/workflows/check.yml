@@ -1,0 +1,31 @@
+name: Check
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - name: Smoke test
+        # Builds the image from the root Dockerfile, runs it as uid 1001 with
+        # every capability dropped, no network and a read-only root, and checks
+        # the page, its sections and the files that must not be served.
+        run: tests/smoke.sh
+      - name: Image size
+        # The README says the free plan runs this page. Print the number that
+        # claim rests on, and fail when the compressed image passes the free
+        # plan's image size (FREE_IMAGE_BYTES, the 300 MB published in
+        # https://dockhold.eu/llms.txt on 2026-11-04). The gzip of a docker
+        # save is a close estimate of the size the build stores.
+        env:
+          FREE_IMAGE_BYTES: "300000000"
+        run: |
+          compressed=$(docker save landing-page-starter:test | gzip -9 | wc -c)
+          echo "compressed (docker save | gzip -9): $((compressed / 1048576)) MiB ($compressed bytes)"
+          if [ "$compressed" -gt "$FREE_IMAGE_BYTES" ]; then
+            echo "::error::compressed image is over FREE_IMAGE_BYTES; the README's free-plan line is no longer true"
+            exit 1
+          fi
